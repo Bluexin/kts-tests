@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -8,7 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/kts-host" />
-            <option value="$PROJECT_DIR$/kts-scripts" />
+            <option value="$PROJECT_DIR$/kts-scriptdef" />
           </set>
         </option>
       </GradleProjectSettings>
