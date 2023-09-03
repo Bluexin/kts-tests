@@ -3,8 +3,9 @@ import kotlin.random.Random
 val rng = Random.nextInt(0, Int.MAX_VALUE)
 val rng2 = localRandom.nextInt(0, Int.MAX_VALUE)
 
+var changes = 0
 onSizeChange { from, to ->
-    println("Listener $id observed the size change from $from to $to")
+    println("Listener $id observed the size change from $from to $to (total changes observed: ${++changes})")
 }
 
 doSomething()
