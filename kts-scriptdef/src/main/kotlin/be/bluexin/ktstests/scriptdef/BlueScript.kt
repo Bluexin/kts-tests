@@ -20,8 +20,6 @@ abstract class BlueScript(private val tree: Tree, val id: Int) : Tree by tree {
 
     fun doSomething() = println("Doing something in id:$id")
 
-    abstract fun testAbstract()
-
     override fun toString() = "BlueScript(id=$id, tree=$tree)"
 }
 
