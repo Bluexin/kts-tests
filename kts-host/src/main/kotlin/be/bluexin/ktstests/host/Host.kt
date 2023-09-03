@@ -8,6 +8,7 @@ import java.io.File
 import kotlin.script.experimental.api.*
 import kotlin.script.experimental.host.toScriptSource
 import kotlin.script.experimental.jvmhost.BasicJvmScriptingHost
+import kotlin.time.measureTime
 import kotlin.time.measureTimedValue
 
 fun main(vararg args: String) {
@@ -15,21 +16,32 @@ fun main(vararg args: String) {
         println("usage: <app> <script file>")
     } else {
         val scriptFile = File(args[0])
-        val sc = scriptFile.toScriptSource()
-        repeat(5) {
-            println("\n---- Executing script $scriptFile without caching ----")
-            val treeOne = TreeImpl()
-            repeat(10) { idx ->
-                Host.evalPrint(sc) { Host.evalFile(it, treeOne, idx) }
-            }
-            println("Final result : $treeOne")
-            val treeTwo = TreeImpl()
-            println("\n---- Executing script $scriptFile with caching ----")
-            repeat(10) { idx ->
-                Host.evalPrint(sc) { Host.evalFileCaching(it, treeTwo, idx) }
-            }
-            println("Final result : $treeTwo")
+        if (scriptFile.isFile) repeat(5) {
+            runEvalPrintLoop(scriptFile, "without", Host::evalFile)
+            runEvalPrintLoop(scriptFile, "with", Host::evalFileCaching)
+        } else {
+            println("Not a file : $scriptFile")
         }
+    }
+}
+
+private inline fun runEvalPrintLoop(
+    sf: File,
+    caching: String,
+    crossinline evalFn: (SourceCode, Tree, Int) -> ResultWithDiagnostics<EvaluationResult>
+) {
+    val sc = sf.toScriptSource()
+    val tree = TreeImpl()
+    println("\n---- Executing script $sf $caching caching ----")
+    repeat(10) { idx ->
+        Host.evalPrint(sc) { evalFn(it, tree, idx) }
+    }
+    repeat(2) {
+        println("Growing from host")
+        val eventHandlersTime = measureTime {
+            tree.grow()
+        }
+        println("Result : $tree (handlers from code duration : $eventHandlersTime)")
     }
 }
 
