@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/kts-host" />
             <option value="$PROJECT_DIR$/kts-scriptdef" />
+            <option value="$PROJECT_DIR$/kts-scripts" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -19,6 +19,7 @@ dependencies {
 //    implementation("org.jetbrains.kotlin:kotlin-scripting-dependencies-maven")
     // coroutines dependency is required for this particular definition
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
 
     testImplementation(kotlin("test-junit5"))
 }
